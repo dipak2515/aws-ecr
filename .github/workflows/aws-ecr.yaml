@@ -29,6 +29,10 @@ jobs:
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
 
+    - name: Generate a new tag
+      id: generate_tag
+      run: echo "::set-output name=tag::$(git rev-parse --short HEAD)"
+
     - name: Build, tag, and push image to Amazon ECR
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
